@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Valentine's Wishes PRO</title>
+
+<style>
+body {
+    font-family: Arial, sans-serif;
+    background: linear-gradient(to bottom, #ff69b4, #ffb6c1);
+    color: #fff;
+    text-align: center;
+    padding: 20px;
+    overflow-x: hidden;
+}
+form {
+    max-width: 400px;
+    margin: 0 auto;
+    background: rgba(255,255,255,0.2);
+    padding: 20px;
+    border-radius: 10px;
+}
+input, textarea, button {
+    display:block;
+    width:100%;
+    margin:10px 0;
+    padding:10px;
+    border:none;
+    border-radius:5px;
+}
+button {
+    background:#ff1493;
+    color:white;
+    cursor:pointer;
+}
+button:hover {
+    background:#ff69b4;
+}
+li {
+    background: rgba(255,255,255,0.3);
+    margin:10px 0;
+    padding:10px;
+    border-radius:5px;
+}
+
+/* Floating hearts */
+.heart {
+    position: fixed;
+    bottom: -10px;
+    font-size: 20px;
+    animation: floatUp 6s linear infinite;
+}
+@keyframes floatUp {
+    from { transform: translateY(0); }
+    to { transform: translateY(-110vh); }
+}
+</style>
+</head>
+
+<body>
+
+<h1 id="typeText"></h1>
+<p>Send a wish to someone special!</p>
+
+<form id="wishForm">
+<input type="text" id="name" placeholder="Your Name" required>
+<textarea id="message" placeholder="Your Wish Message" rows="4" required></textarea>
+<button type="submit">Send Wish</button>
+</form>
+
+<h2>Recent Wishes</h2>
+<ul id="wishes"></ul>
+
+<script>
+// Typewriter effect
+const msg = "💖 Happy Valentine's Day! 💖";
+let i = 0;
+function typing(){
+    if(i < msg.length){
+        document.getElementById("typeText").innerHTML += msg.charAt(i);
+        i++;
+        setTimeout(typing, 70);
+    }
+}
+typing();
+
+// Wishes
+const form = document.getElementById('wishForm');
+const wishesList = document.getElementById('wishes');
+
+form.addEventListener('submit', function(e) {
+    e.preventDefault();
+    const name = document.getElementById('name').value;
+    const message = document.getElementById('message').value;
+
+    const wishItem = document.createElement('li');
+    wishItem.innerHTML = `<strong>${name}:</strong> ${message}`;
+    wishesList.appendChild(wishItem);
+
+    form.reset();
+});
+
+// Floating hearts generator
+setInterval(() => {
+    const heart = document.createElement("div");
+    heart.classList.add("heart");
+    heart.innerHTML = "❤️";
+    heart.style.left = Math.random()*100 + "vw";
+    heart.style.fontSize = (Math.random()*20+10) + "px";
+    document.body.appendChild(heart);
+
+    setTimeout(()=>{
+        heart.remove();
+    },6000);
+},500);
+</script>
+
+</body>
+</html>
